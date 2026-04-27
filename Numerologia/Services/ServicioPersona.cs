@@ -1,10 +1,17 @@
-
+using Numerologia.DTOs;
 using Numerologia.Models;
-using Numerologia.Services;
-  
+using Numerologia.Repositorio;
 
-public class ServicioPersona : IServicioPersona
+namespace Numerologia.Services;
+
+public sealed class ServicioPersona : IServicioPersona
 {
+    private readonly IInterpretacionRepositorio _interpretacionRepositorio;
+
+    public ServicioPersona(IInterpretacionRepositorio interpretacionRepositorio)
+    {
+        _interpretacionRepositorio = interpretacionRepositorio;
+    }
 
     public ResumenPersona GetResumen(Persona persona, DateTime targetDate)
     {
@@ -24,57 +31,41 @@ public class ServicioPersona : IServicioPersona
         };
     }
 
-    public int GetLifePathNumber(Persona persona)
+ public async Task<InterpretacionResultadoDto> GetLifePathInterpretationAsync(
+        Persona persona,
+        CancellationToken cancellationToken = default)
     {
-        return CrearPerfil(persona).CalculateLifePathNumber();
+        var number = GetLifePathNumber(persona);
+
+        var interpretacion = await _interpretacionRepositorio.GetByNumberAndTypeAsync(
+            number,
+            "LifePath",
+            cancellationToken);
+
+        return new InterpretacionResultadoDto
+        {
+            Number = number,
+            Type = "LifePath",
+            Title = interpretacion?.Title,
+            Description = interpretacion?.Description
+        };
     }
 
-    public int GetExpressionNumber(Persona persona)
+    public int GetLifePathNumber(Persona persona) => CrearPerfil(persona).CalculateLifePathNumber();
+    public int GetExpressionNumber(Persona persona) => CrearPerfil(persona).CalculateExpressionNumber();
+    public List<int> GetChallengeNumbers(Persona persona) => new(CrearPerfil(persona).CalculateChallengeNumbers());
+    public List<int> GetPinnacles(Persona persona) => new(CrearPerfil(persona).CalculatePinnacles());
+    public int GetPersonalYear(Persona persona, DateTime targetDate) => CrearPerfil(persona).CalculatePersonalYear(targetDate);
+    public int GetPersonalMonth(Persona persona, DateTime targetDate) => CrearPerfil(persona).CalculatePersonalMonth(targetDate);
+    public int GetPersonalDay(Persona persona, DateTime targetDate) => CrearPerfil(persona).CalculatePersonalDay(targetDate);
+    public int GetHeredityNumber(Persona persona) => CrearPerfil(persona).CalculateHeredityNumber();
+    public int GetCapsuleNumber(Persona persona) => CrearPerfil(persona).CalculateCapsuleNumber();
+    private NumerologiaPersona CrearPerfil(Persona persona)
     {
-        return CrearPerfil(persona).CalculateExpressionNumber();
-    }
-
-    public List<int> GetChallengeNumbers(Persona persona)
-    {
-        return new List<int>(CrearPerfil(persona).CalculateChallengeNumbers());
-    }
-
-    public List<int> GetPinnacles(Persona persona)
-    {
-        return new List<int>(CrearPerfil(persona).CalculatePinnacles());
-    }
-
-    public int GetPersonalYear(Persona persona, DateTime targetDate)
-    {
-        return CrearPerfil(persona).CalculatePersonalYear(targetDate);
-    }
-
-    public int GetPersonalMonth(Persona persona, DateTime targetDate)
-    {
-        return CrearPerfil(persona).CalculatePersonalMonth(targetDate);
-    }
-
-    public int GetPersonalDay(Persona persona, DateTime targetDate)
-    {
-        return CrearPerfil(persona).CalculatePersonalDay(targetDate);
-    }
-
-    public int GetHeredityNumber(Persona persona)
-    {
-        return CrearPerfil(persona).CalculateHeredityNumber();
-    }
-
-    public int GetCapsuleNumber(Persona persona)
-    {
-        return CrearPerfil(persona).CalculateCapsuleNumber();
-    }
-
-    private static PerfilNumerologico CrearPerfil(Persona persona)
-    {
-        return new PerfilNumerologico(
+        return new NumerologiaPersona(
             persona.FirstName,
             persona.LastName,
             persona.BirthDate);
     }
-  
+    
 }

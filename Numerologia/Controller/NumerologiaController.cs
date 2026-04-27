@@ -20,7 +20,21 @@ public class NumerologiaController : ControllerBase
         return new Persona(request.FirstName, request.LastName, request.BirthDate);
     }
 
+    [HttpPost("life-path")]
+    public async Task<ActionResult<InterpretacionResultadoDto>> GetLifePath(
+        [FromBody] PersonaRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        var persona = new Persona(request.FirstName, request.LastName, request.BirthDate);
 
+        var result = await _servicioPersona.GetLifePathInterpretationAsync(
+            persona,
+            cancellationToken);
+
+        return Ok(result);
+    }
+
+   /*
     [HttpPost("life-path")]
     public ActionResult<NumeroResultadoDto> GetLifePath([FromBody] PersonaRequestDto request)
     {
@@ -32,6 +46,7 @@ public class NumerologiaController : ControllerBase
          Number = number
           });
     }
+    */
     [HttpPost("expression")]
     public ActionResult<NumeroResultadoDto> GetExpression([FromBody] PersonaRequestDto request)
     {

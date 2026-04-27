@@ -1,5 +1,5 @@
 
-
+namespace Numerologia.DTOs;
 public sealed class ResumenPersonaDto
 {
     public int LifePathNumber { get; init; }

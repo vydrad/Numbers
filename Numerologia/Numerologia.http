@@ -1,6 +1,21 @@
 @Numerologia_HostAddress = http://localhost:5148
 
-GET {{Numerologia_HostAddress}}/weatherforecast/
-Accept: application/json
+POST http://localhost:5148/api/numerologia/life-path
+Content-Type: application/json
 
-###
+{
+  "firstName": "Juan",
+  "lastName": "Perez",
+  "birthDate": "1990-05-10"
+}
+
+
+POST {{Numerologia_HostAddress}}/api/numerologia/resumen
+Content-Type: application/json
+
+{
+  "firstName": "Juan",
+  "lastName": "Perez",
+  "birthDate": "1990-05-10",
+  "targetDate": "2026-04-27"
+}

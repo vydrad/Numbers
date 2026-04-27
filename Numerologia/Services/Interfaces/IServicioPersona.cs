@@ -1,10 +1,10 @@
+using Numerologia.DTOs;
 using Numerologia.Models;
 
 namespace Numerologia.Services;
 
 public interface IServicioPersona
 {
-    ResumenPersona GetResumen(Persona persona, DateTime targetDate);
     int GetLifePathNumber(Persona persona);
     int GetExpressionNumber(Persona persona);
     List<int> GetChallengeNumbers(Persona persona);
@@ -14,4 +14,9 @@ public interface IServicioPersona
     int GetPersonalDay(Persona persona, DateTime targetDate);
     int GetHeredityNumber(Persona persona);
     int GetCapsuleNumber(Persona persona);
+    ResumenPersona GetResumen(Persona persona, DateTime targetDate);
+
+    Task<InterpretacionResultadoDto> GetLifePathInterpretationAsync(
+        Persona persona,
+        CancellationToken cancellationToken = default);
 }
