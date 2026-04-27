@@ -1,24 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-namespace Numerologia;
+using System.ComponentModel.DataAnnotations;
 
-public class Persona
+namespace Numerologia.Models;
+
+public sealed class Persona
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public DateTime BirthDate { get; set; }
-
-
-    public void NumerologyProfile(string firstName, string lastName, DateTime birthDate)
+    public Persona(string firstName, string lastName, DateTime birthDate)
     {
         FirstName = ValidateRequired(firstName, nameof(firstName));
         LastName = ValidateRequired(lastName, nameof(lastName));
         BirthDate = birthDate.Date;
+        
     }
 
-    private string ValidateRequired(string value, string paramName)
+   // public int Id { get; set; }
+    public string FirstName { get; }
+    public string LastName { get; }
+    public DateTime BirthDate { get; }
+    
+   // public EmailAddressAttribute Email { get; set; }
+    private static string ValidateRequired(string value, string paramName)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
@@ -27,6 +27,4 @@ public class Persona
 
         return value.Trim();
     }
-
-
 }
