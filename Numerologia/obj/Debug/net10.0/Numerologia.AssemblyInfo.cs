@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Numerologia")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9a4a984f4953def663fcfe268088ca0bba7f95b5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3bd428de82181fb1c522842af083b6868c76e179")]
 [assembly: System.Reflection.AssemblyProductAttribute("Numerologia")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Numerologia")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

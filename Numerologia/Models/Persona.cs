@@ -4,6 +4,12 @@ namespace Numerologia.Models;
 
 public sealed class Persona
 {
+       // public int Id { get; set; }
+    public string FirstName { get; }
+    public string LastName { get; }
+    public DateTime BirthDate { get; }
+    
+   // public EmailAddressAttribute Email { get; set; }
     public Persona(string firstName, string lastName, DateTime birthDate)
     {
         FirstName = ValidateRequired(firstName, nameof(firstName));
@@ -12,12 +18,6 @@ public sealed class Persona
         
     }
 
-   // public int Id { get; set; }
-    public string FirstName { get; }
-    public string LastName { get; }
-    public DateTime BirthDate { get; }
-    
-   // public EmailAddressAttribute Email { get; set; }
     private static string ValidateRequired(string value, string paramName)
     {
         if (string.IsNullOrWhiteSpace(value))
